@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">firebaseCRUD</string>
+    <string name="organiser">Organiser : </string>
 </resources>

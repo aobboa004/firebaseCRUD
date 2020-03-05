@@ -104,7 +104,7 @@
         android:layout_marginLeft="52dp"
         android:layout_marginTop="32dp"
         android:text="Create Event"
-        android:onClick="btninsert"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventContactInfo" />
 
@@ -114,6 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
+        android:onClick="btnDisplay"
 
         android:layout_centerHorizontal="true"
         android:text="View Events"

@@ -3,6 +3,7 @@ package com.learning.firebasecrud;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     EditText contactInfo;
     FirebaseDatabase database;
     DatabaseReference ref;
-    Events event;
+
 
 
 
@@ -45,40 +46,38 @@ public class MainActivity extends AppCompatActivity {
         contactInfo=findViewById(R.id.eventContactInfo);
         database=FirebaseDatabase.getInstance();
         ref=database.getReference("Events");
-        event = new Events();
 
-
-    }
-
-    private void getValues( String idn)
-    {
-
-        event.setName(eventName.getText().toString());
-        event.setOrganiser(eventOrganisedBy.getText().toString());
-        event.setStartdate(eventStartingDate.getText().toString());
-        event.setEnddate(eventEndingDate.getText().toString());
-        event.setStarttime(eventTime.getText().toString());
-        event.setContactinfo(contactInfo.getText().toString());
-        event.setVenue(eventVenue.getText().toString());
-        event.setId(idn);
-    }
-
-    public void btninsert(View view) {
-        ref.addValueEventListener(new ValueEventListener() {
-
-             String id=ref.push().getKey();
+        createEvent.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                getValues(id);
-                ref.child(id).setValue(event);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onClick(View v) {
+                addEvent();
             }
         });
 
+
+    }
+
+    private void addEvent() {
+        String name=eventName.getText().toString();
+        String venue=eventVenue.getText().toString();
+        String organisedby=eventOrganisedBy.getText().toString();
+        String startdate=eventStartingDate.getText().toString();
+        String enddate=eventEndingDate.getText().toString();
+        String starttime=eventTime.getText().toString();
+        String contactinfo=contactInfo.getText().toString();
+
+        String id=ref.push().getKey();
+
+        Events event=new Events(name,id,organisedby,startdate,enddate,starttime,contactinfo,venue);
+        ref.child(id).setValue(event);
+    }
+
+
+
+
+
+    public void btnDisplay(View view) {
+        Intent intent=new Intent(MainActivity.this,Display.class);
+        startActivity(intent);
     }
 }
